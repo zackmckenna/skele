@@ -6,6 +6,7 @@ const socket = socketClient(ENDPOINT)
 
 const HomePage = () => {
   const [response, setResponse] = useState('')
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     socket.on('test', (data) => {
@@ -19,11 +20,33 @@ const HomePage = () => {
     socket.emit('test')
   }
 
+  const handleMessageChange = (e) => {
+    e.preventDefault()
+    setMessage(e.target.value)
+  }
+
+  const socketEmit = (type, value) => () => {
+    socket.emit(type, value)
+  }
+
+  const sendMessage = (message) => {
+    return () => {
+      setMessage('')
+      socket.emit('message', message)
+    }
+  }
+
   return (
     <>
       <div>
         <h1 className="p3">Skele</h1>
-        <button onClick={() => handleClick()}>test</button>
+        <button onClick={handleClick}>test</button>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => handleMessageChange(e)}
+        />
+        <button onClick={sendMessage(message)}>send message</button>
       </div>
     </>
   )

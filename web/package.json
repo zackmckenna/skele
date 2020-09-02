@@ -10,7 +10,8 @@
     "@redwoodjs/web": "^0.16.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.3.0",

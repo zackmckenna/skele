@@ -1,14 +1,25 @@
+import { useState, useEffect } from 'react'
 import { Link, routes } from '@redwoodjs/router'
+import socketClient from 'socket.io-client'
+const ENDPOINT = 'http://localhost:3000/'
 
 const HomePage = () => {
+  const [response, setResponse] = useState('')
+
+  useEffect(() => {
+    const socket = socketClient(ENDPOINT)
+    socket.on('test', (data) => {
+      setResponse(data)
+    })
+
+    return () => socket.disconnect()
+  }, [])
+
   return (
     <>
-      <h1>HomePage</h1>
-      <p>Find me in "./web/src/pages/HomePage/HomePage.js"</p>
-      <p>
-        My default route is named "home", link to me with `
-        <Link to={routes.home()}>Home</Link>`
-      </p>
+      <div>
+        <h1 className="p3">Skele</h1>
+      </div>
     </>
   )
 }

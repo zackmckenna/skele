@@ -5,11 +5,25 @@ const ENDPOINT = 'http://localhost:3000/'
 const socket = socketClient(ENDPOINT)
 
 const HomePage = () => {
+  const [response, setResponse] = useState('')
+
+  useEffect(() => {
+    socket.on('test', (data) => {
+      setResponse(data)
+    })
+
+    return () => socket.disconnect()
+  }, [])
+
+  const handleClick = () => {
+    socket.emit('test')
+  }
+
   return (
     <>
       <div>
         <h1 className="p3">Skele</h1>
-        <h2>welcome to skel</h2>
+        <button onClick={() => handleClick()}>test</button>
       </div>
     </>
   )
